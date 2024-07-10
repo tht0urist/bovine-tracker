@@ -5,7 +5,6 @@ struct CreateEventView: View {
     @State private var selectedType: EventType = .WEIGHT
     @State private var value: String = ""
     @State private var sheepId: String = ""
-    
     @State private var showingToast = false
     @State private var isScanning = false
     @State private var scannedCode = ""
@@ -41,7 +40,7 @@ struct CreateEventView: View {
                     }
                     
                     HStack {
-                        TextField("Numéro de la bovine", text: $sheepId)
+                        TextField("Id du bovin", text: $sheepId)
                         Button("Scanner") {
                             isScanning = true
                         }
@@ -59,7 +58,6 @@ struct CreateEventView: View {
                     QRCodeScannerView(scannedCode: $scannedCode, isScanning: $isScanning)
                 }
                 .onChange(of: scannedCode) { newValue in
-                    print(newValue)
                     if !newValue.isEmpty {
                         sheepId = newValue
                         scannedCode = "" // Clear the scanned code after using it
@@ -93,4 +91,3 @@ struct CreateEventView: View {
         }
     }
 }
-

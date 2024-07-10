@@ -1,10 +1,3 @@
-//
-//  ToastView.swift
-//  bovine-tracker
-//
-//  Created by Oualid Bouh on 24/06/2024.
-//
-
 import SwiftUI
 
 struct ToastView: View {

@@ -12,7 +12,7 @@ class DatabaseManager {
             fatalError("Error opening database: \(error.localizedDescription)")
         }
     }
-    
+
     func saveEvent(event: Event) {
         guard let database = database else { return }
 
@@ -29,27 +29,45 @@ class DatabaseManager {
     }
 
     func fetchEvents() -> [Event] {
-        guard let database = database else { return [] }
-        var events = [Event]()
+        guard let database = self.database else { return [] }
+        var events: [Event] = []
 
         do {
             let query = QueryBuilder
-                .select(SelectResult.all())
+                .select(SelectResult.expression(Meta.id))
                 .from(DataSource.collection(try database.defaultCollection()))
-
-            let resultSet = try query.execute()
-            let decoder = JSONDecoder()
             
-            for result in resultSet.allResults() {
-                if let dict = result.dictionary(forKey: "_default"),
-                   let data = try? JSONSerialization.data(withJSONObject: dict.toDictionary(), options: []),
-                   let event = try? decoder.decode(Event.self, from: data) {
-                    events.append(event)
+            let result = try query.execute()
+            for row in result.allResults() {
+                if let documentID = row.string(forKey: "id") {
+                    if let document = try database.defaultCollection().document(id: documentID) {
+                        let mutableDocument = document.toMutable()
+                        if let event = Event(id: mutableDocument.id, dictionary: mutableDocument.toDictionary()) {
+                            events.append(event)
+                        } else {
+                            print("Failed to convert document with ID \(documentID) to Event")
+                        }
+                    }
                 }
             }
         } catch {
-            print("Error fetching events: \(error.localizedDescription)")
+            print("Error executing query: \(error.localizedDescription)")
         }
+
         return events
+    }
+    
+    func deleteEvent(event: Event) {
+        guard let database = database else { return }
+        do {
+            if let eventId = event.id, let document = try database.defaultCollection().document(id: eventId) {
+                try database.defaultCollection().delete(document: document)
+                print("Event with ID \(eventId) deleted successfully.")
+            } else {
+                print("Document with ID \(event.id ?? "unknown") not found.")
+            }
+        } catch {
+            print("Error deleting event: \(error.localizedDescription)")
+        }
     }
 }
