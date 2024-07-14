@@ -1,4 +1,0 @@
-brew "swiftlint"
-brew "carthage"
-brew "cmake"
-brew "ccache"
