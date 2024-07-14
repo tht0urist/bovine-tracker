@@ -1,0 +1,34 @@
+{
+  "iOS" : [
+    {
+      "swiftToolchainVersion" : "5.10 (swiftlang-5.10.0.13 clang-1500.3.9.4)",
+      "hash" : "8b94369e1b0acaf6612fbb0945be799de46114a409fc1ab84abf3f6669533686",
+      "name" : "ObjectBox",
+      "identifier" : "ios-arm64",
+      "container" : "ObjectBox.xcframework"
+    },
+    {
+      "name" : "ObjectBox",
+      "hash" : "43663922ac4c10d2f22ecbf2a58c6a105f45db7d95aa55312ed61aae31d2507f",
+      "swiftToolchainVersion" : "5.10 (swiftlang-5.10.0.13 clang-1500.3.9.4)",
+      "container" : "ObjectBox.xcframework",
+      "identifier" : "ios-arm64_x86_64-simulator"
+    }
+  ],
+  "commitish" : "v2.0.0",
+  "Mac" : [
+    {
+      "name" : "ObjectBox",
+      "hash" : "d6fc34de065b6cefa18d5bad76106f46bcc8207c8e8c2bd51519348c18f0c201",
+      "identifier" : "macos-arm64_x86_64",
+      "container" : "ObjectBox.xcframework",
+      "swiftToolchainVersion" : "5.10 (swiftlang-5.10.0.13 clang-1500.3.9.4)"
+    }
+  ],
+  "watchOS" : [
+
+  ],
+  "tvOS" : [
+
+  ]
+}
